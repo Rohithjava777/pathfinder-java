@@ -39,6 +39,13 @@ A JavaFX desktop application that visualizes various pathfinding algorithms in r
 - **Medium Purple**: Nodes in exploration queue (BFS/DFS)
 - **Light Sky Blue**: Final path from start to goal
 
+## 🎬 Demo Videos
+
+Watch the pathfinding visualizer in action:
+
+- **[Demo Video 1](https://www.youtube.com/watch?v=1MaM9EF9VbY)** - Pathfinding algorithms demonstration
+- **[Demo Video 2](https://www.youtube.com/watch?v=LbLRZao_hqw)** - Interactive features and maze generation
+
 ## 🚀 Getting Started
 
 ### Prerequisites
