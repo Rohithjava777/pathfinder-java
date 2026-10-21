@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinding Visualizer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+</head>
+<body>
+    <!-- Top Menu Bar -->
+    <div class="menu-bar">
+        <div class="menu-item" id="menuFile">
+            File
+            <div class="dropdown" id="dropdownFile">
+                <div class="dropdown-item" id="menuClose">Close</div>
+            </div>
+        </div>
+        <div class="menu-item" id="menuEdit">
+            Edit
+            <div class="dropdown" id="dropdownEdit">
+                <div class="dropdown-item" id="menuDelete">Delete</div>
+            </div>
+        </div>
+        <div class="menu-item" id="menuHelp">
+            Help
+            <div class="dropdown" id="dropdownHelp">
+                <div class="dropdown-item" id="menuAbout">About</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <span class="toolbar-title">Pathfinding Visualiser</span>
+        <button class="btn btn-visualise" id="btnVisualise">Visualise!</button>
+        <button class="btn" id="btnHelp">Get Help</button>
+        <select class="select-algo" id="algSelect">
+            <option value="" disabled selected>Algorithms</option>
+            <option value="astar">A Star</option>
+            <option value="dijkstra">Dijkstra</option>
+            <option value="bfs">BFS</option>
+            <option value="dfs">DFS</option>
+        </select>
+        <span class="speed-label">Animation Speed (slow–quick)</span>
+        <input type="range" id="speedSlider" min="1" max="100" value="50" class="speed-slider">
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <!-- Grid Size -->
+            <div class="sidebar-section">
+                <label class="sidebar-label">Size of Grid</label>
+                <span class="sidebar-hint">size of cells in px</span>
+                <input type="number" id="gridSizeInput" class="sidebar-input" placeholder="e.g. 20" min="5" max="100">
+            </div>
+
+            <!-- Grid Buttons -->
+            <div class="sidebar-section btn-grid">
+                <button class="btn sidebar-btn" id="btnCreateGrid">Create Grid</button>
+                <button class="btn sidebar-btn" id="btnClearGrid">Clear Grid</button>
+                <button class="btn sidebar-btn" id="btnSetStart">Set Start</button>
+                <button class="btn sidebar-btn" id="btnSetGoal">Set Goal</button>
+                <button class="btn sidebar-btn" id="btnDrawWalls">Draw Walls</button>
+                <button class="btn sidebar-btn" id="btnEraseWalls">Erase Wall</button>
+            </div>
+
+            <!-- Maze Section -->
+            <div class="sidebar-section">
+                <label class="sidebar-label">Select or Create a Maze:</label>
+                <select class="sidebar-select" id="mazeSelect">
+                    <option value="" disabled selected>Select Maze</option>
+                    <option value="mazeDFS">MazeDFS</option>
+                    <option value="random">Random Mazes</option>
+                </select>
+                <button class="btn sidebar-btn full-width" id="btnCreateMaze">Create Maze</button>
+            </div>
+
+            <!-- File Section -->
+            <div class="sidebar-section">
+                <label class="sidebar-label">Maze Name</label>
+                <input type="text" id="mazeNameInput" class="sidebar-input" placeholder="my-maze">
+                <div class="btn-row">
+                    <button class="btn sidebar-btn" id="btnSaveMaze">Save Maze</button>
+                    <button class="btn sidebar-btn" id="btnLoadMaze">Load Maze</button>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="sidebar-section">
+                <div class="status-bar" id="statusBar">Ready</div>
+            </div>
+        </div>
+
+        <!-- Canvas Area -->
+        <div class="canvas-container">
+            <div class="tab-bar">
+                <div class="tab active" id="tabGrid">Grid</div>
+                <div class="tab" id="tabCompare">Comparing</div>
+            </div>
+            <canvas id="gridCanvas"></canvas>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2>Pathfinding Visualizer</h2>
+            <p>An interactive visualization tool for pathfinding algorithms.</p>
+            <h3>Algorithms:</h3>
+            <ul>
+                <li><strong>A* (A-Star)</strong> — Heuristic-based, optimal pathfinding using f(n) = g(n) + h(n)</li>
+                <li><strong>Dijkstra's</strong> — Guarantees shortest path without heuristics</li>
+                <li><strong>BFS</strong> — Level-order traversal, shortest path in unweighted graphs</li>
+                <li><strong>DFS</strong> — Stack-based exploration, does not guarantee shortest path</li>
+            </ul>
+            <h3>Color Legend:</h3>
+            <div class="legend">
+                <div class="legend-item"><span class="legend-color" style="background:#22c55e;"></span> Start Node</div>
+                <div class="legend-item"><span class="legend-color" style="background:#ef4444;"></span> Goal Node</div>
+                <div class="legend-item"><span class="legend-color" style="background:#1a1a2e;"></span> Wall</div>
+                <div class="legend-item"><span class="legend-color" style="background:#f97316;"></span> Exploring</div>
+                <div class="legend-item"><span class="legend-color" style="background:#a78bfa;"></span> In Queue</div>
+                <div class="legend-item"><span class="legend-color" style="background:#38bdf8;"></span> Final Path</div>
+            </div>
+            <p class="credit">Originally by Maryan Prydatko · Web port</p>
+            <button class="btn" id="btnCloseModal">Close</button>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirmOverlay">
+        <div class="modal modal-confirm">
+            <h3 id="confirmTitle">Confirm</h3>
+            <p id="confirmMessage">Are you sure?</p>
+            <div class="modal-buttons">
+                <button class="btn btn-visualise" id="confirmOk">OK</button>
+                <button class="btn" id="confirmCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/node.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/astar.js"></script>
+    <script src="js/dijkstra.js"></script>
+    <script src="js/bfs.js"></script>
+    <script src="js/dfs.js"></script>
+    <script src="js/mazeDFS.js"></script>
+    <script src="js/randomMaze.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

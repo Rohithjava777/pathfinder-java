@@ -1,0 +1,387 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #2d2d3f;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Menu Bar ===== */
+.menu-bar {
+    display: flex;
+    background: #eee;
+    color: #333;
+    font-size: 14px;
+    height: 28px;
+    align-items: center;
+    user-select: none;
+    z-index: 100;
+}
+
+.menu-item {
+    position: relative;
+    padding: 4px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.menu-item:hover {
+    background: #ddd;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    min-width: 120px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 200;
+}
+
+.menu-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.dropdown-item:hover {
+    background: #e8e8e8;
+}
+
+/* ===== Toolbar ===== */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: #393e46;
+    flex-wrap: wrap;
+}
+
+.toolbar-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    margin-right: 8px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+    padding: 6px 14px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: #eee;
+    color: #333;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    background: #ddd;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-visualise {
+    background: #4ecca3;
+    color: #fff;
+    border-color: #3eb489;
+    font-weight: 600;
+}
+
+.btn-visualise:hover {
+    background: #3eb489;
+}
+
+.btn.active-tool {
+    background: #4ecca3;
+    color: #fff;
+    border-color: #3eb489;
+    box-shadow: 0 0 0 2px rgba(78, 204, 163, 0.4);
+}
+
+/* ===== Select / Inputs ===== */
+.select-algo, .sidebar-select {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    font-size: 13px;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+.speed-label {
+    color: #ccc;
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+.speed-slider {
+    width: 180px;
+    accent-color: #4ecca3;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: #393e46;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+}
+
+.sidebar-hint {
+    font-size: 12px;
+    color: #9a9999;
+    font-style: italic;
+    text-align: center;
+}
+
+.sidebar-input {
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    font-size: 13px;
+    background: #fff;
+    color: #333;
+}
+
+.sidebar-select {
+    width: 100%;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.sidebar-btn {
+    font-size: 12px;
+    padding: 5px 8px;
+}
+
+.sidebar-btn.full-width {
+    grid-column: 1 / -1;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.btn-row {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-row .btn {
+    flex: 1;
+}
+
+.status-bar {
+    font-size: 12px;
+    color: #4ecca3;
+    padding: 6px 8px;
+    background: rgba(78, 204, 163, 0.1);
+    border-radius: 4px;
+    text-align: center;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== Canvas Container ===== */
+.canvas-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+}
+
+.tab-bar {
+    display: flex;
+    background: #e8e8e8;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab {
+    padding: 6px 20px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    user-select: none;
+}
+
+.tab.active {
+    color: #333;
+    border-bottom-color: #4ecca3;
+    background: #fff;
+}
+
+.tab:hover {
+    background: #f0f0f0;
+}
+
+#gridCanvas {
+    display: block;
+    cursor: crosshair;
+}
+
+/* ===== Modals ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    padding: 24px 32px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.modal h2 {
+    margin-bottom: 12px;
+    color: #393e46;
+}
+
+.modal h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: #393e46;
+}
+
+.modal ul {
+    padding-left: 20px;
+    margin-bottom: 8px;
+}
+
+.modal li {
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.modal p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.credit {
+    color: #999;
+    font-style: italic;
+    margin-top: 16px;
+}
+
+.legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.legend-color {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    flex-shrink: 0;
+}
+
+.modal-confirm {
+    max-width: 380px;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    justify-content: flex-end;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+        min-width: 180px;
+        padding: 10px 8px;
+    }
+
+    .toolbar {
+        gap: 6px;
+        padding: 6px 10px;
+    }
+
+    .toolbar-title {
+        font-size: 16px;
+    }
+}
